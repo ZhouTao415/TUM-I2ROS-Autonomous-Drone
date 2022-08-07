@@ -1,0 +1,21 @@
+<!-- This launch file starts the map service which maintains the map using the Sensor of the Quadrotors. -->
+
+<launch>
+  <arg name="point_cloud" default="/point_cloud"/>
+
+  <include file="$(find map)/launch/map_service_drone.launch" >
+    <arg name="point_cloud" value="$(arg point_cloud)" />
+    <arg name="ns" value="Quadrotor" />
+  </include>
+
+  <include file="$(find map)/launch/map_service_drone.launch" >
+    <arg name="point_cloud" value="$(arg point_cloud)" />
+    <arg name="ns" value="Quadrotor2" />
+  </include>
+
+  <!-- generate octomap -->
+  <include file="$(find map)/launch/octomap.launch" >
+    <arg name="cloud_in" value="$(arg point_cloud)"/>
+  </include>
+
+</launch>

@@ -1,0 +1,9 @@
+<launch>
+  <node name="traj_publisher" pkg="controller_pkg" type="traj_publisher" output="screen">
+    <remap from="current_state_est" to="Quadrotor/Estimation/current_state" />
+  </node>
+  <node name="controller_node" pkg="controller_pkg" type="controller_node">
+    <remap from="current_state_est" to="Quadrotor/Estimation/current_state" />
+    <remap from="rotor_speed_cmds" to="Quadrotor/Commands/rotor_speed_cmds" />
+  </node>
+</launch>

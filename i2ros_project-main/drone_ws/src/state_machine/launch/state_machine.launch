@@ -1,0 +1,19 @@
+<!-- This launch is to launch the state machine (ver1)-->
+<launch>
+    <arg name="simulation_file" default="simulation_map_path.launch"/>
+    <arg name="ns_Quadrotor" default="Quadrotor"/>̣
+    <arg name="ns_Quadrotor2" default="Quadrotor2"/>
+
+    <include file="$(find planning)/launch/$(arg simulation_file)"/>
+    <group ns="$(arg ns_Quadrotor)">
+        <node name="state_machine" pkg="state_machine_pkg" type="state_machine" output="screen">
+            <rosparam file="$(find state_machine_pkg)/param/state_machine_params_1.yaml" command="load"/>
+        </node>
+    </group>
+    <group ns="$(arg ns_Quadrotor2)">
+        <node name="state_machine" pkg="state_machine_pkg" type="state_machine" output="screen">
+            <rosparam file="$(find state_machine_pkg)/param/state_machine_params_2.yaml" command="load"/>
+        </node>
+    </group>
+    <node name="launch_keyboard_node" pkg="state_machine_pkg" type="keyboard_control_node"/>
+</launch>

@@ -1,0 +1,7 @@
+<library path="lib/libmedian_filter_nodelet">
+  <class name="fla_utils/median_filter" type="fla_utils::MedianFilterNodelet" base_class_type="nodelet::Nodelet">
+  <description>
+  Performs a median filtering.
+  </description>
+  </class>
+</library>

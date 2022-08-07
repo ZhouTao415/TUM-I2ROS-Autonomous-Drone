@@ -1,0 +1,24 @@
+global_costmap:
+  global_frame: world #地图坐标系
+  robot_base_frame: Quadrotor #机器人坐标系
+  # 以此实现坐标变换
+
+  use_maximum: true
+
+  update_frequency: 10.0 #代价地图更新频率
+  publish_frequency: 10.0 #代价地图的发布频率
+  transform_tolerance: 0.5 #等待坐标变换发布信息的超时时间
+
+  static_map: true # 是否使用一个地图或者地图服务器来初始化全局代价地图，如果不使用静态地图，这个参数为false.
+  first_map_only: true
+
+  observation_sources: point_cloud
+  #对传感器的坐标系和数据进行配置。这个也会用于代价地图添加和清除障碍物。例如，你可以用激光雷达传感器用于在代价地图添加障碍物，再添加kinect用于导航和清除障碍物。
+  point_cloud:
+    sensor_frame: Quadrotor/Sensors/RGBCameraLeft
+    data_type: PointCloud2
+    topic: Registered/DepthCamera/point_cloud
+    marking: true
+    clearing: false
+    max_obstacle_height: 5.0
+    min_obstacle_height: 1.0

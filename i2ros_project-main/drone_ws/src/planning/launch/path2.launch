@@ -1,0 +1,12 @@
+<launch>    
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base_drone2" output="screen" clear_params="true">
+      <remap from="/map" to="/projected_map" />
+      <!-- <remap from="move_base_simple/goal" to="move_base_simple/goal_drone2" /> -->
+      <!-- <remap from="move_base/goal" to="move_base/goal_drone2" /> -->
+      <rosparam file="$(find planning)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find planning)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find planning)/param/local_costmap_params_drone2.yaml" command="load" />
+      <rosparam file="$(find planning)/param/global_costmap_params_drone2.yaml" command="load" />
+      <rosparam file="$(find planning)/param/base_local_planner_params.yaml" command="load" />
+  </node>
+</launch>

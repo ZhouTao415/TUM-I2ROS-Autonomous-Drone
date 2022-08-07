@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>utils</name>
+  <version>0.0.0</version>
+  <description>General purpose, non-ROS utilities.</description>
+
+  <maintainer email="jcarter@mit.edu">John Carter</maintainer>
+  <author>John Carter</author>
+  <license>MIT</license>
+  <buildtool_depend>cmake</buildtool_depend>
+  
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+</package>

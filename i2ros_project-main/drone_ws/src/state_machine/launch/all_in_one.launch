@@ -1,0 +1,13 @@
+<!-- This launch is to launch the state machine (ver1)-->
+<launch>
+  <arg name="launch_file" default="state_machine.launch"/>
+
+  <include file="$(find state_machine_pkg)/launch/$(arg launch_file)"/>
+
+  <include file="$(find explore)/launch/costmap_explore.launch">
+    <arg name="autostart" value="false"/>
+  </include>
+
+  <include file="$(find controller_pkg)/launch/fly_drones.launch" />
+
+</launch>

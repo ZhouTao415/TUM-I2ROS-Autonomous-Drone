@@ -1,0 +1,28 @@
+# controller_patience: 2.0
+
+recovery_behavior_enabled: true
+# clearing_rotation_allowed: true
+shutdown_costmaps: false
+
+planner_patience: 5.0
+
+oscillation_distance: 0.5
+clearing_radius: 5.0
+recovery_behaviors:
+  - name: 'conservative_reset'
+    type: 'clear_costmap_recovery/ClearCostmapRecovery'
+  - name: 'aggressive_reset'
+    type: 'clear_costmap_recovery/ClearCostmapRecovery'
+#  - name: 'clearing_rotation1'
+# type: 'rotate_recovery/RotateRecovery'
+  - name: 'clearing_rotation'
+    type: 'rotate_recovery/RotateRecovery'
+conservative_reset:
+  reset_distance: 3.0
+  layer_names: 
+     - obstacles
+
+aggressive_reset:
+  reset_distance: 0.0
+  layer_names:
+     - obstacles

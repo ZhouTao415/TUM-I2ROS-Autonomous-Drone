@@ -1,0 +1,37 @@
+<launch>
+  <arg name="ns_Quadrotor" default="Quadrotor"/>
+  <arg name="ns_Quadrotor2" default="Quadrotor2"/>
+
+  <group ns="$(arg ns_Quadrotor)">
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" clear_params="true">
+      <remap from="map" to="/projected_map" />
+      <rosparam file="$(find planning)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find planning)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find planning)/param/local_costmap_params_drone1.yaml" command="load" />
+      <rosparam file="$(find planning)/param/global_costmap_params_drone1.yaml" command="load" />
+      <rosparam file="$(find planning)/param/global_planner_params.yaml" command="load"/>
+      <rosparam file="$(find planning)/param/base_local_planner_params.yaml" command="load" />
+      <rosparam file="$(find planning)/param/move_base_params_drone1.yaml" command="load"/>
+    </node>
+    <node pkg="planning" type="world_center_pub" respawn="false" name="world_center_pub" >
+      <param name="child_frame_id" value="$(arg ns_Quadrotor)" />
+    </node>
+  </group>
+
+  <group ns="$(arg ns_Quadrotor2)">
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" clear_params="true">
+        <remap from="map" to="/projected_map" />
+        <rosparam file="$(find planning)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find planning)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find planning)/param/local_costmap_params_drone2.yaml" command="load" />
+        <rosparam file="$(find planning)/param/global_costmap_params_drone2.yaml" command="load" />
+        <rosparam file="$(find planning)/param/global_planner_params.yaml" command="load"/>
+        <rosparam file="$(find planning)/param/base_local_planner_params.yaml" command="load" />
+        <rosparam file="$(find planning)/param/move_base_params_drone2.yaml" command="load"/>
+    </node>
+    <node pkg="planning" type="world_center_pub" respawn="false" name="world_center_pub" >
+      <param name="child_frame_id" value="$(arg ns_Quadrotor2)" />
+    </node>
+  </group>
+
+</launch>

@@ -1,0 +1,18 @@
+<launch>
+  <arg name="name_Quadrotor" default="Quadrotor"/>
+  <arg name="name_Quadrotor2" default="Quadrotor2"/>
+  <arg name="autostart" default="true"/>
+
+  <node pkg="costmap_2d" type="costmap_2d_node" respawn="false" name="costmap_server" >
+    <rosparam file="$(find explore)/param/costmap_server_params.yaml" command="load" ns="costmap" />
+    <param name="costmap/robot_base_frame" value="$(arg name_Quadrotor)"/>
+  </node>
+
+  <node pkg="explore_lite" type="explore" respawn="false" name="explore" args="$(arg name_Quadrotor) $(arg name_Quadrotor2)">
+    <rosparam file="$(find explore)/param/explore_params.yaml" command="load" />
+    <param name="costmap_topic" value="/costmap_server/costmap/costmap"/>
+    <param name="costmap_updates_topic" value="/costmap_server/costmap/costmap_updates"/>
+    <param name="autostart" type="bool" value="$(arg autostart)"/>
+  </node>
+
+</launch>

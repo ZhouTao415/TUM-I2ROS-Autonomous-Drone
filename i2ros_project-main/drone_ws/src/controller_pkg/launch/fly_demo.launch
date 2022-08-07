@@ -1,0 +1,18 @@
+<launch>
+  <arg name="ns_Quadrotor" default="Quadrotor"/>
+  
+      <node name="traj_publisher1" pkg="controller_pkg" type="traj_publisher" args="$(arg ns_Quadrotor)" output="screen">
+        <rosparam param="kp">[1.0, 1.0, 1.0]</rosparam>
+        <rosparam param="ki">[0.1, 0.1, 0.1]</rosparam>
+        <rosparam param="kd">[0.5, 0.5, 0.5]</rosparam>
+        <remap from="current_state_est" to="Quadrotor/Estimation/current_state" />
+        <remap from="desired_state" to="Quadrotor/Commands/desired_state" />
+        <remap from="local_path" to="Quadrotor/move_base/TrajectoryPlannerROS/global_plan" />
+        <remap from="drone_speeds" to="Quadrotor/speeds" />
+      </node>
+      <node name="controller_node1" pkg="controller_pkg" type="controller_node">
+        <remap from="current_state_est" to="Quadrotor/Estimation/current_state" />
+        <remap from="rotor_speed_cmds" to="Quadrotor/Commands/rotor_speed_cmds" />
+        <remap from="desired_state" to="Quadrotor/Commands/desired_state" />
+      </node>
+</launch>

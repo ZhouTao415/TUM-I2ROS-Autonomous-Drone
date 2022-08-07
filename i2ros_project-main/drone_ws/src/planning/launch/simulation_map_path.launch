@@ -1,0 +1,19 @@
+<!-- This launch file starts the path planning together with simulation and map service. -->
+
+<launch>
+  <arg name="point_cloud" default="/point_cloud"/>
+  <arg name="sub_point_cloud" default="/Registered/DepthCamera/point_cloud"/>
+  <arg name="simulation_file" default="simulation.launch"/>
+
+  <include file="$(find simulation)/launch/$(arg simulation_file)" />
+
+  <include file="$(find map)/launch/map_service.launch">
+    <arg name="point_cloud" value="$(arg point_cloud)"/>
+  </include>
+
+  <include file="$(find planning)/launch/path.launch" >
+    <arg name="ns_Quadrotor" value="Quadrotor"/>
+    <arg name="ns_Quadrotor2" value="Quadrotor2"/>
+  </include>
+
+</launch>

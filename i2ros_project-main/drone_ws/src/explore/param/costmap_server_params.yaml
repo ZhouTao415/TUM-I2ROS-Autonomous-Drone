@@ -1,0 +1,10 @@
+global_frame: world
+transform_tolerance: 0.5
+static_map: true
+map_topic: "/projected_map"
+inflation_radius: 1.0
+cost_scaling_factor: 0.0
+map_type: costmap
+track_unknown_space: true
+update_frequency: 10.0
+publish_frequency: 10.0

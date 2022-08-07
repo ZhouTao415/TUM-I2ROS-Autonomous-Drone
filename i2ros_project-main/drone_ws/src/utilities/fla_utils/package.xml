@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>fla_utils</name>
+  <version>0.0.0</version>
+  <description>General purpose, ROS utilities.</description>
+
+  <maintainer email="jcarter@mit.edu">John Carter</maintainer>
+  <author>John Carter</author>
+  <license>MIT</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>fla_msgs</depend>
+  <depend>tf</depend>
+  <depend>laser_geometry</depend>
+  <depend>nodelet</depend>
+  <depend>utils</depend>
+
+  <export>
+    <nodelet plugin="${prefix}/nodelet_plugins.xml" />
+  </export>
+</package>

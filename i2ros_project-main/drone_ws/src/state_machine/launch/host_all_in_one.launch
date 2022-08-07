@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find state_machine_pkg)/launch/all_in_one.launch">
+    <arg name="launch_file" value="on_host_state_machine.launch"/>
+  </include>
+
+</launch>

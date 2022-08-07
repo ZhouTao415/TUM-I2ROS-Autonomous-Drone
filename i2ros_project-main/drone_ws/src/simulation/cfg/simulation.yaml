@@ -1,0 +1,34 @@
+unity_world:
+  offset_x: 0
+  offset_y: 0
+  global_frame: overhead
+
+unity_objects:
+  port: "12349"
+  ip_address: 127.0.0.1
+
+unity_image:
+  port: "12344"
+  ip_address: 127.0.0.1
+  field_of_view: 55.95 #degrees
+  image_frame: camera
+
+unity_depthimage:
+  port: "12345"
+  ip_address: 127.0.0.1
+  field_of_view: 55.95 #degrees
+  max_range: 20.0 #meters, must be synced with Unity far clip plane
+  image_frame: depth_camera
+  noise_mean: 0.0
+  noise_sigma: 0.0
+
+unity_pose:
+  port: "12346"
+  ip_address: 127.0.0.1
+
+unity_lidar:
+  port: "12347"
+  ip_address: 127.0.0.1
+  laser_frame: laser
+  range_frame: lidarlite_laser
+  singlepoint_min_range: 0.05

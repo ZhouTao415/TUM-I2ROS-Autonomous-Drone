@@ -1,0 +1,22 @@
+<launch>
+  <arg name="ns_Quadrotor" default="Quadrotor"/>
+  <arg name="ns_Quadrotor2" default="Quadrotor2"/>
+  
+  <group ns = "$(arg ns_Quadrotor)">
+    <node name="traj_publisher" pkg="controller_pkg" type="traj_publisher" args="$(arg ns_Quadrotor)" >
+      <rosparam file="$(find controller_pkg)/param/pid_param.yaml" command="load"/>
+      <rosparam file="$(find controller_pkg)/param/rotation.yaml" command="load"/>
+      <remap from="/local_path" to="move_base/TrajectoryPlannerROS/global_plan"/>
+    </node>
+    <node name="controller_node" pkg="controller_pkg" type="controller_node"/>
+  </group>
+
+  <group ns="$(arg ns_Quadrotor2)">
+    <node name="traj_publisher" pkg="controller_pkg" type="traj_publisher" args="$(arg ns_Quadrotor2)" >
+      <rosparam file="$(find controller_pkg)/param/pid_param.yaml" command="load"/>
+      <rosparam file="$(find controller_pkg)/param/rotation.yaml" command="load"/>
+      <remap from="/local_path" to="move_base/TrajectoryPlannerROS/global_plan"/>
+    </node>
+    <node name="controller_node" pkg="controller_pkg" type="controller_node"/>
+  </group>
+</launch>

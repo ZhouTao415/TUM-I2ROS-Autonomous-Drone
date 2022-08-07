@@ -1,0 +1,10 @@
+<launch>
+  
+  <node name="Simulation" pkg="simulation" type="Two_Drones.x86_64"/>
+
+  <include file="$(find simulation)/launch/on_host_simulation.launch" >
+    <arg name="master" value="127.0.0.1" />  <!-- change to the ip of the machine where roscore is to be launched. -->
+    <arg name="servant" value="127.0.0.1" />  <!-- change to the ip of the machine where unity is to be launched. -->
+  </include>
+
+</launch>

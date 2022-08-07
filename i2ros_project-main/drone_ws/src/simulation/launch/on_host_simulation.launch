@@ -1,0 +1,30 @@
+<launch>
+  <arg name="corrupt_state_estimate" default="true" />
+  <arg name="master" default="192.168.80.128" />  <!-- change to the ip of the machine where roscore is to be launched. -->
+  <arg name="servant" default="192.168.80.1" />  <!-- change to the ip of the machine where unity is to be launched. -->
+
+  <param name="use_sim_time" type="bool" value="true" />
+  
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find simulation)/cfg/Drones.rviz" />
+  
+  <include file="$(find simulation)/launch/quadrotor.launch" >
+    <arg name="corrupt_state_estimate" value="$(arg corrupt_state_estimate)" />
+    <arg name="master" value="$(arg master)" /> 
+    <arg name="servant" value="$(arg servant)" />
+    <arg name="name" value="Quadrotor" />
+    <arg name="state_receive_port" value="9998" />
+    <arg name="command_send_port" value="12346" />
+  </include>
+
+  <include file="$(find simulation)/launch/quadrotor.launch" >
+    <arg name="corrupt_state_estimate" value="$(arg corrupt_state_estimate)" />
+    <arg name="master" value="$(arg master)" /> 
+    <arg name="servant" value="$(arg servant)" />
+    <arg name="name" value="Quadrotor2" />
+    <arg name="state_receive_port" value="9997" />
+    <arg name="command_send_port" value="12345" />
+  </include>
+
+  <node name="time_server" pkg="simulation" type="time_server" args="Quadrotor Quadrotor2"/>
+
+</launch>

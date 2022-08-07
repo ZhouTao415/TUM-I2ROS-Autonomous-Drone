@@ -1,0 +1,11 @@
+<launch>
+  <arg name="load_params" default="true" />
+  <arg name="accel_topic" default="/realsense/accel/sample" />
+  <arg name="gyro_topic" default="/realsense/gyro/sample" />
+
+  <node pkg="fla_utils" type="interpolate_imu" name="interpolate_imu" output="screen">
+      <!-- input remaps -->
+      <remap from="~accel_topic" to="$(arg accel_topic)" />
+      <remap from="~gyro_topic" to="$(arg gyro_topic)" />
+  </node>
+</launch>

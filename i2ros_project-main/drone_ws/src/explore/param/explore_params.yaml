@@ -1,0 +1,13 @@
+visualize: true
+planner_frequency: 1.0
+progress_timeout: 5.0
+potential_scale: 3.0
+orientation_scale: 0.0
+gain_scale: 1.0
+transform_tolerance: 0.5
+x_min: 0.0
+x_max: 100.0
+y_min: -50.0
+y_max: 50.0
+safety_radius: 1.0
+goal_always_on_frontier: false

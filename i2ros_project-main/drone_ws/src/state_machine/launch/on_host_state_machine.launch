@@ -1,0 +1,7 @@
+<!-- This launch is to launch the state machine (ver1)-->
+<launch>
+  <include file="$(find state_machine_pkg)/launch/state_machine.launch">
+    <arg name="simulation_file" value="on_host_simulation_map_path.launch"/>
+  </include>
+
+</launch>

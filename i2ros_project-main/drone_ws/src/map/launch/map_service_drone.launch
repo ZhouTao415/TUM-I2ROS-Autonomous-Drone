@@ -1,0 +1,14 @@
+<launch>
+  <arg name="point_cloud" default="/point_cloud"/>
+  <arg name="sub_point_cloud" default="Registered/DepthCamera/point_cloud"/>
+  <arg name="ns" default="Quadrotor"/>
+
+  <group ns="$(arg ns)">
+    <!-- generate point cloud -->
+    <include file="$(find map)/launch/point_cloud.launch" >
+      <arg name="point_cloud" value="$(arg sub_point_cloud)"/>
+    </include>
+    <!-- republish point clouds into one topic -->
+    <node pkg="topic_tools" type="relay" name="republish_point_cloud" args="$(arg sub_point_cloud) $(arg point_cloud)" />
+  </group>
+</launch>

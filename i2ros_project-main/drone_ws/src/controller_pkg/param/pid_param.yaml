@@ -1,0 +1,8 @@
+# p i d gain for the linear velocity and yaw pid controller 
+# [x, y, z, yaw]
+kp: [1.0, 1.0, 1.0, 1.0]  
+ki: [0.1, 0.1, 0.1, 0.1]
+kd: [0.5, 0.5, 0.3, 0.3]
+
+# z offset
+z_offset: 0.4

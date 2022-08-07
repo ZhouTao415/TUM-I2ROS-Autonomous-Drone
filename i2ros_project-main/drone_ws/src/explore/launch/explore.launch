@@ -1,0 +1,13 @@
+<launch>
+  <arg name="name_Quadrotor" default="Quadrotor"/>
+  <arg name="name_Quadrotor2" default="Quadrotor2"/>
+  <arg name="autostart" default="true"/>
+
+  <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen" args="$(arg name_Quadrotor) $(arg name_Quadrotor2)">
+    <rosparam file="$(find explore)/param/explore_params.yaml" command="load" />
+    <param name="costmap_topic" value="/projected_map"/>
+    <param name="min_frontier_size" value="3.0"/>
+    <param name="autostart" type="bool" value="$(arg autostart)"/>
+  </node>
+
+</launch>

@@ -1,0 +1,56 @@
+<launch>
+  <arg name="corrupt_state_estimate" default="true" />
+  <arg name="master" default="127.0.0.1" /> 
+  <arg name="servant" default="127.0.0.1" />
+  <arg name="name" default="Quadrotor" />
+  <arg name="state_receive_port" default="9998" />
+  <arg name="command_send_port" default="12346" />
+
+  <group ns="$(arg name)">
+    <node pkg="simulation" type="unity_ros" name="unity_ros" args="$(arg master) $(arg state_receive_port)">
+      <remap from="$(arg name)/Sensors/DepthCamera/camera_info" to="Sensors/DepthCamera/camera_info" />
+      <remap from="$(arg name)/Sensors/DepthCamera/image_raw" to="Sensors/DepthCamera/image_raw" />
+      <remap from="$(arg name)/Sensors/IMU/pose" to="Sensors/IMU/pose" />
+      <remap from="$(arg name)/Sensors/IMU/twist" to="Sensors/IMU/twist" />
+      <remap from="$(arg name)/Sensors/RGBCameraLeft/camera_info" to="Sensors/RGBCameraLeft/camera_info" />
+      <remap from="$(arg name)/Sensors/RGBCameraLeft/image_raw" to="Sensors/RGBCameraLeft/image_raw" />
+      <remap from="$(arg name)/Sensors/RGBCameraRight/camera_info" to="Sensors/RGBCameraRight/camera_info" />
+      <remap from="$(arg name)/Sensors/RGBCameraRight/image_raw" to="Sensors/RGBCameraRight/image_raw" />
+
+      <param name="infinite_distance" type="double" value="101.0"/>
+    </node>
+    <node pkg="simulation" type="state_estimate_corruptor_node" name="state_estimate_corruptor_$(arg name)">
+      <remap from="/true_pose" to="Sensors/IMU/pose" />
+      <remap from="/true_twist" to="Sensors/IMU/twist" />
+      <remap from="/pose_est" to="Estimation/pose" />
+      <remap from="/twist_est" to="Estimation/twist" />
+      <remap from="/current_state_est" to="Estimation/current_state" />
+
+      <!-- random-walk drift factor (grows with distance traveled) (sigma / m) -->
+      <param if="$(arg corrupt_state_estimate)" name="drift_rw_factor" value="0.03"/>
+      <param unless="$(arg corrupt_state_estimate)" name="drift_rw_factor" value="0.0"/>
+
+      <!-- independent white noise -->
+      <param if="$(arg corrupt_state_estimate)" name="pos_white_sig" value="0.005"/>
+      <param unless="$(arg corrupt_state_estimate)" name="pos_white_sig" value="0.0"/>
+
+      <!-- average number of seconds between jumps/drift updates -->
+      <param if="$(arg corrupt_state_estimate)" name="jump_seconds" value="20.0"/>
+      <param unless="$(arg corrupt_state_estimate)" name="jump_seconds" value="-1.0"/>
+    </node>
+
+    <!-- establish tf -->
+    <!-- <node pkg="simulation" type="transform_broadcaster" name="base_to_world" args="Sensors/IMU/pose world $(arg name)"/> -->
+    <node pkg="simulation" type="transform_broadcaster" name="base_to_world" args="Estimation/pose world $(arg name)"/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="Sensors_to_base" args="0.1 0 0 -1.5707963 0 0 $(arg name) $(arg name)/Sensors" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="DepthCamera_to_Sensors_of_$(arg name)" args="0 0 0 0 0 -1.5707963 $(arg name)/Sensors $(arg name)/Sensors/DepthCamera" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="RGBCameraLeft_to_Sensors_of_$(arg name)" args="-0.05 0 0 0 0 -1.5707963 $(arg name)/Sensors $(arg name)/Sensors/RGBCameraLeft" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="RGBCameraRight_to_Sensors_of_$(arg name)" args="0.05 0 0 0 0 -1.5707963 $(arg name)/Sensors $(arg name)/Sensors/RGBCameraRight" />
+
+    <node pkg="simulation" type="w_to_unity" name="w_to_unity" args="$(arg servant) $(arg command_send_port)">
+      <remap from="rotor_speed_cmds" to="Commands/rotor_speed_cmds" />
+    </node>
+
+  </group>
+
+</launch>

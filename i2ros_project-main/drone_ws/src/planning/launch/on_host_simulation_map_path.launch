@@ -1,0 +1,7 @@
+<!-- This launch file starts the simulation together with the map service. -->
+
+<launch>
+  <include file="$(find planning)/launch/simulation_map_path.launch" >
+    <arg name="simulation_file" default="on_host_simulation.launch"/>
+  </include>
+</launch>

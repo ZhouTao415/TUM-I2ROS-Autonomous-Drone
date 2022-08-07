@@ -1,0 +1,24 @@
+local_costmap:
+  global_frame: world # odom coordinate frame
+  robot_base_frame: Quadrotor2 # drone coordinate frame
+
+  update_frequency: 10.0 #代价地图更新频率
+  publish_frequency: 10.0 #代价地图的发布频率
+  transform_tolerance: 0.5 #等待坐标变换发布信息的超时时间
+
+  static_map: false #不需要静态地图，可以提升导航效果
+  rolling_window: true #是否使用动态窗口，默认为false，在静态的全局地图中，地图不会变化
+  width: 5 # 局部地图宽度 单位是 m
+  height: 5 # 局部地图高度 单位是 m
+  resolution: 1 # 局部地图分辨率 单位是 m，一般与静态地图分辨率保持一致
+
+  observation_sources: point_cloud
+  #对传感器的坐标系和数据进行配置。这个也会用于代价地图添加和清除障碍物。例如，你可以用激光雷达传感器用于在代价地图添加障碍物，再添加kinect用于导航和清除障碍物。
+  point_cloud:
+    sensor_frame: Quadrotor2/Sensors/DepthCamera
+    data_type: PointCloud2
+    topic: Registered/DepthCamera/point_cloud
+    marking: true
+    clearing: true
+    max_obstacle_height: 5.0
+    min_obstacle_height: 1.0

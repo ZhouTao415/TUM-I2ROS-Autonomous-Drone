@@ -1,0 +1,36 @@
+<launch>
+  <arg name="depth_camera_info"              default="Sensors/DepthCamera/camera_info"/>
+  <arg name="depth_image_rect"               default="Sensors/DepthCamera/image_raw"/>
+  <arg name="depth_registered_camera_info"   default="Registered/DepthCamera/camera_info"/>
+  <arg name="depth_registered_image_rect"    default="Registered/DepthCamera/image_raw"/>
+  <arg name="rgb_camera_info"                default="Sensors/RGBCameraLeft/camera_info"/>
+  <arg name="rgb_image_rect"                 default="Sensors/RGBCameraLeft/image_raw"/>
+  <arg name="point_cloud"                    default="Registered/DepthCamera/point_cloud"/>
+
+  <node pkg="nodelet" type="nodelet" name="nodelet_manager" args="manager" />
+  <node pkg="nodelet" type="nodelet" name="register_depth" args="load depth_image_proc/register nodelet_manager">
+
+    <!-- subscribe -->
+    <remap from="rgb/camera_info"    to="$(arg rgb_camera_info)"/>
+    <remap from="depth/camera_info"  to="$(arg depth_camera_info)"/>
+    <remap from="depth/image_rect"   to="$(arg depth_image_rect)"/>
+
+    <!-- publish -->
+    <remap from="depth_registered/camera_info"   to="$(arg depth_registered_camera_info)"/>
+    <remap from="depth_registered/image_rect"   to="$(arg depth_registered_image_rect)"/>
+
+  </node>
+
+  <node pkg="nodelet" type="nodelet" name="register_point_cloud" args="load depth_image_proc/point_cloud_xyzrgb nodelet_manager">
+    
+    <!-- subscribe -->
+    <remap from="rgb/camera_info"             to="$(arg rgb_camera_info)"/>
+    <remap from="rgb/image_rect_color"        to="$(arg rgb_image_rect)"/>
+    <remap from="depth_registered/image_rect" to="$(arg depth_registered_image_rect)"/>
+
+    <!-- publish -->
+    <remap from="depth_registered/points"   to="$(arg point_cloud)"/>
+
+  </node>
+
+</launch>

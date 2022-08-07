@@ -1,0 +1,39 @@
+# Updated 7/25/2017 -- Simulator
+
+calibration:
+  filename: simulation
+  camera_id: 0
+  lens_id: 0
+  imu_id: 0
+  host_id: 0
+
+use_tracked_features: true
+use_baro: false
+use_draper_imu: false
+use_draper_baro: false
+use_laser_altimeter: true
+image_decimation: 1  # Add only every n'th image measurement to Samwise
+laser_altimeter_decimation: 5  # Add only every n'th altimeter measurement to the graph
+image_timestamp_offset: 0.0  # Add this timing offset to all received image timestamps
+
+samwise:
+  init:
+    bias_accel: { x: 0.0, y: 0.0, z: 0.0 }
+    bias_accel_sigma: { x: 0.01, y: 0.01, z: 0.01 }
+    bias_gyro: { x: 0.0, y: 0.0, z: 0.0 }
+    bias_gyro_sigma: { x: 0.001, y: 0.001, z: 0.001 }
+
+camera:
+  image_width: 320
+  image_height: 180
+  intrinsics: { fu: 97.87426995358646, fv: 97.87426995358646, pu: 160.0, pv: 90.0, s: 0 }
+  distortion: { k1: 0.0, k2: 0.0, p1: 0.0, p2: 0.0, k3: 0.0 }
+  body2cam: { dx: 0.0, dy: 0.0, dz: 0.0, yaw: 1.570796, pitch: 0.0, roll: 1.570796 }
+  estimate_body2cam: false
+  estimate_intrinsics: false
+
+tracker:
+  image_scale: 1.0
+
+topic_names:
+  image: /realsense/color/image_raw
