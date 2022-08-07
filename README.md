@@ -29,7 +29,7 @@ Watch the video below to get an intuition of how this project works.
    Note: You can launch each segment of our project separately, see segment description for detail.
 
 ## General structure
-![plot](./images/structure.png)
+![plot](./i2ros_project-main/images/structure.png)
 
 The project basically contains 6 modules. 
 - The **simulation** module read Sensor data from unity and send commands to it. 
@@ -40,7 +40,7 @@ The project basically contains 6 modules.
 - **Exploration** takes the current generated map and drone state to decide where are next goals for drones to explore.
 
 The following is a concrete node graph of the project.
-![plot](./images/rosgraph.png)
+![plot](./i2ros_project-main/images/rosgraph.png)
 
 ## Remaining problems
 
